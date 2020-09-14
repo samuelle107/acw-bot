@@ -1,10 +1,12 @@
 const Discord = require('discord.js');
 const dotenv = require('dotenv');
 const fs = require('fs');
+const bunyan = require('bunyan');
 const channels = require('./channels.json');
 
 dotenv.config();
 const { BOT_TOKEN } = process.env;
+const log = bunyan.createLogger({ name: 'aCruelBot' });
 const PREFIX = '!';
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -17,6 +19,7 @@ commandFiles.forEach((file) => {
 
 client.on('ready', async () => {
     client.channels.cache.get(channels.botTestingChannelId).send('```INITIATION COMPLETE```');
+    log.info('Bot has started');
 });
 
 client.on('message', (message) => {
@@ -29,13 +32,16 @@ client.on('message', (message) => {
 
     try {
         client.commands.get(command).execute(message, args);
+        log.info(command);
     } catch (error) {
         message.channel.send('```I CANNOT DO THAT```');
+        log.error(error);
     }
 });
 
 client.on('guildMemberAdd', member => {
     member.roles.add('754866704437215304');
+    log.info(`${member.displayName} has joined`);
 });
 
 client.login(BOT_TOKEN);
