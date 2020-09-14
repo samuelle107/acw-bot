@@ -23,7 +23,10 @@ module.exports = {
         try {
             await member.kick();
             const kickMessage = '```' + `${member.displayName} HAS BEEN KICKED` + '```';
+            const gifUrl = 'https://media.giphy.com/media/ECpTuaJw4kRq0/source.gif';
+
             message.channel.send(kickMessage);
+            message.channel.send(gifUrl);
         } catch (error) {
             message.channel.send('```THERE WAS A PROBLEM KICKING```');
         }

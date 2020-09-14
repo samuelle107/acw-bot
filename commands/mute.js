@@ -36,14 +36,23 @@ module.exports = {
             return;
         }
 
+        // const authorHighestRole = message.member.highestRole.position;
+        // const mentionHighestRole = member.highestRole.position;
+
+        // if (mentionHighestRole >= authorHighestRole) {
+        //     return;
+        // }
+
         const timeInMs = timeLimit * 60000;
         const roles = member.roles.cache;
         const mutedRole = member.guild.roles.cache.find(role => role.name.toLowerCase() === 'muted');
         const muteMessage = '```' + `${member.displayName} HAS BEEN MUTED` + '```';
+        const gifUrl = 'https://i.kym-cdn.com/photos/images/newsfeed/000/968/291/682.gif';
 
         member.roles.remove(roles);
         member.roles.add(mutedRole.id);
         message.channel.send(muteMessage);
+        message.channel.send(gifUrl);
 
         setTimeout(() => {
             const unMutedMessage = '```' + `${member.displayName} HAS BEEN UNMUTED` + '```';
