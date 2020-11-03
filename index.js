@@ -8,7 +8,7 @@ dotenv.config();
 const { BOT_TOKEN } = process.env;
 const log = bunyan.createLogger({ name: 'aCruelBot' });
 const PREFIX = '!';
-const client = new Discord.Client();
+const client = new Discord.Client({ ws: { intents: 'GUILD_PRESENCES' } });
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter((file) => file.endsWith('.js'));
 
@@ -18,7 +18,9 @@ commandFiles.forEach((file) => {
 });
 
 client.on('ready', async () => {
-    client.channels.cache.get(channels.botTestingChannelId).send('```INITIATION COMPLETE```');
+    client.channels
+        .fetch(channels.botTestingChannelId)
+        .then(channel => channel.send('INITIATION COMPLETE'));
     log.info('Bot has started');
 });
 
