@@ -8,7 +8,7 @@ dotenv.config();
 const { BOT_TOKEN } = process.env;
 const log = bunyan.createLogger({ name: 'aCruelBot' });
 const PREFIX = '!';
-const client = new Discord.Client({ ws: { intents: 'GUILD_PRESENCES' } });
+const client = new Discord.Client({ ws: { intents: new Discord.Intents(Discord.Intents.ALL) } });
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter((file) => file.endsWith('.js'));
 
