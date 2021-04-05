@@ -41,9 +41,4 @@ client.on('message', (message) => {
     }
 });
 
-client.on('guildMemberAdd', member => {
-    member.roles.add('754866704437215304');
-    log.info(`${member.displayName} has joined`);
-});
-
 client.login(BOT_TOKEN);
